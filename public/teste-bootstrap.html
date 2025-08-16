@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Bootstrap - Finan@sys</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Teste Bootstrap - Finan@sys</h1>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <button class="btn btn-primary w-100 mb-3" onclick="testarModal()">
+                    <i class="bi bi-person-plus"></i> Testar Modal
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-success w-100 mb-3" onclick="testarAlert()">
+                    <i class="bi bi-check-circle"></i> Testar Alert
+                </button>
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-4">
+            <h5>Status do Bootstrap:</h5>
+            <p id="bootstrapStatus">Verificando...</p>
+        </div>
+    </div>
+
+    <!-- Modal de Teste -->
+    <div class="modal fade" id="testeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal de Teste</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Se você está vendo este modal, o Bootstrap está funcionando perfeitamente! 🎉</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Verificar quando a página carrega
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusElement = document.getElementById('bootstrapStatus');
+            
+            if (typeof bootstrap !== 'undefined') {
+                statusElement.innerHTML = '<span class="text-success">✅ Bootstrap carregado com sucesso!</span>';
+                console.log('Bootstrap disponível:', bootstrap);
+            } else {
+                statusElement.innerHTML = '<span class="text-danger">❌ Bootstrap não foi carregado!</span>';
+                console.error('Bootstrap não disponível');
+            }
+        });
+
+        function testarModal() {
+            console.log('Testando modal...');
+            
+            if (typeof bootstrap === 'undefined') {
+                alert('Erro: Bootstrap não foi carregado!');
+                return;
+            }
+            
+            try {
+                const modalElement = document.getElementById('testeModal');
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                console.log('Modal aberto com sucesso!');
+            } catch (error) {
+                console.error('Erro ao abrir modal:', error);
+                alert('Erro ao abrir modal: ' + error.message);
+            }
+        }
+
+        function testarAlert() {
+            if (typeof bootstrap === 'undefined') {
+                alert('Erro: Bootstrap não foi carregado!');
+                return;
+            }
+            
+            // Criar alerta Bootstrap
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show';
+            alertDiv.innerHTML = `
+                <strong>Sucesso!</strong> Bootstrap está funcionando perfeitamente!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.alert-info'));
+            
+            // Auto-remover após 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

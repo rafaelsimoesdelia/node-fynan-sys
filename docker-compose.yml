@@ -1,0 +1,68 @@
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:7.0
+    container_name: finan-sys-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: finan_sys
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    networks:
+      - finan-sys-network
+
+  # Finan@sys Application
+  app:
+    build: .
+    container_name: finan-sys-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGODB_URI: mongodb://admin:admin123@mongo:27017/finan_sys?authSource=admin
+      JWT_SECRET: finan_sys_secret_key_2025
+      JWT_EXPIRE: 24h
+    depends_on:
+      - mongo
+    volumes:
+      - ./uploads:/app/uploads
+      - .:/app
+      - /app/node_modules
+    networks:
+      - finan-sys-network
+    command: npm run dev
+
+  # MongoDB Express (Optional - Web UI for MongoDB)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: finan-sys-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongo:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    depends_on:
+      - mongo
+    networks:
+      - finan-sys-network
+
+volumes:
+  mongo_data:
+    driver: local
+  mongo_config:
+    driver: local
+
+networks:
+  finan-sys-network:
+    driver: bridge

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finan@sys - Sistema de Gerenciamento Financeiro</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-bank2"></i>
+                <strong>Finan@sys</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-section="dashboard">
+                            <i class="bi bi-house"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="ordens">
+                            <i class="bi bi-file-earmark-text"></i> Ordens
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="clientes">
+                            <i class="bi bi-people"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="cheques">
+                            <i class="bi bi-cash-coin"></i> Cheques
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="operacoes">
+                            <i class="bi bi-graph-up"></i> Operações
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-section="upload">
+                            <i class="bi bi-upload"></i> Upload
+                        </a>
+                    </li>
+                </ul>
+                <div class="navbar-nav">
+                    <span class="navbar-text">
+                        <i class="bi bi-person-circle"></i> Usuário Sistema
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-4">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section active">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="display-6 text-primary mb-4">
+                        <i class="bi bi-bank2"></i> Finan@sys
+                    </h1>
+                    <h2 class="h4 mb-4">DESCUENTO DE CHEQUES</h2>
+                    <p class="text-muted">INTEGRA DATOS CARGADOS POR FORMULARIO DE CARGA RAPIDA / VIA DISKETTE / WEB</p>
+                    <p class="text-muted">Versão: v_23042025</p>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Total Ordens</h5>
+                                    <h2 id="totalOrdens">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="bi bi-file-earmark-text display-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Ordens Integradas</h5>
+                                    <h2 id="ordensIntegradas">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="bi bi-check-circle display-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Pendentes</h5>
+                                    <h2 id="ordensPendentes">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="bi bi-clock display-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Total Clientes</h5>
+                                    <h2 id="totalClientes">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="bi bi-people display-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-lightning"></i> Ações Rápidas
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-primary w-100" onclick="showIntegrarOrden()">
+                                        <i class="bi bi-plus-circle"></i><br>
+                                        Integrar por Nro. de ORDEN
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-success w-100" onclick="showUploadExcel()">
+                                        <i class="bi bi-upload"></i><br>
+                                        Cargar desde Excel
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-info w-100" onclick="showNovaOrdem()">
+                                        <i class="bi bi-file-earmark-plus"></i><br>
+                                        Nueva Orden
+                                    </button>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <button class="btn btn-warning w-100" onclick="showNuevoCliente()">
+                                        <i class="bi bi-person-plus"></i><br>
+                                        Nuevo Cliente
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-clock-history"></i> Ordens Recentes
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Cliente</th>
+                                            <th>Taxa</th>
+                                            <th>Gastos</th>
+                                            <th>Status</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable">
+                                        <!-- Dados serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ordens Section -->
+        <div id="ordens" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="bi bi-file-earmark-text"></i> Gerenciamento de Ordens</h2>
+                        <button class="btn btn-primary" onclick="showNovaOrdem()">
+                            <i class="bi bi-plus-circle"></i> Nova Ordem
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" id="filterStatus">
+                                        <option value="">Todos</option>
+                                        <option value="PENDENTE">Pendente</option>
+                                        <option value="EM_PROCESSAMENTO">Em Processamento</option>
+                                        <option value="INTEGRADA">Integrada</option>
+                                        <option value="ERRO">Erro</option>
+                                        <option value="CANCELADA">Cancelada</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Cliente</label>
+                                    <input type="text" class="form-control" id="filterCliente" placeholder="Código do cliente">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Origem</label>
+                                    <select class="form-select" id="filterOrigem">
+                                        <option value="">Todas</option>
+                                        <option value="FORMULARIO">Formulário</option>
+                                        <option value="DISKETTE">Diskette</option>
+                                        <option value="WEB">Web</option>
+                                        <option value="EXCEL">Excel</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button class="btn btn-secondary w-100" onclick="filtrarOrdens()">
+                                        <i class="bi bi-search"></i> Filtrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Cliente</th>
+                                            <th>Sucursal</th>
+                                            <th>Taxa</th>
+                                            <th>Gastos</th>
+                                            <th>Status</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTable">
+                                        <!-- Dados serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <nav aria-label="Navegação de páginas">
+                                <ul class="pagination justify-content-center" id="ordersPagination">
+                                    <!-- Paginação será gerada via JavaScript -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clientes Section -->
+        <div id="clientes" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="bi bi-people"></i> Gerenciamento de Clientes</h2>
+                        <button class="btn btn-primary" onclick="showNuevoCliente()">
+                            <i class="bi bi-person-plus"></i> Novo Cliente
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nome</th>
+                                            <th>Tipo</th>
+                                            <th>CPF/CNPJ</th>
+                                            <th>Sucursal</th>
+                                            <th>Status</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="clientsTable">
+                                        <!-- Dados serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cheques Section -->
+        <div id="cheques" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="bi bi-cash-coin"></i> Gerenciamento de Cheques</h2>
+                </div>
+            </div>
+
+            <!-- Cheques Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Banco</th>
+                                            <th>Valor</th>
+                                            <th>Librador</th>
+                                            <th>Status</th>
+                                            <th>Ordem</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="chequesTable">
+                                        <!-- Dados serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operações Section -->
+        <div id="operacoes" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="bi bi-graph-up"></i> Gerenciamento de Operações</h2>
+                </div>
+            </div>
+
+            <!-- Operações Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Número</th>
+                                            <th>Tipo</th>
+                                            <th>Capital</th>
+                                            <th>Taxa</th>
+                                            <th>Status</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="operacoesTable">
+                                        <!-- Dados serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div id="upload" class="content-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2><i class="bi bi-upload"></i> Upload de Planilhas Excel</h2>
+                    <p class="text-muted">Carregue planilhas Excel para integrar dados automaticamente</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Upload de Arquivo</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="uploadForm">
+                                <div class="mb-3">
+                                    <label for="planilha" class="form-label">Selecionar Planilha Excel</label>
+                                    <input type="file" class="form-control" id="planilha" name="planilha" accept=".xlsx,.xls,.csv" required>
+                                    <div class="form-text">Formatos aceitos: .xlsx, .xls, .csv (máximo 10MB)</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-upload"></i> Processar Planilha
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Template</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Baixe o template para criar sua planilha:</p>
+                            <a href="/api/upload/template" class="btn btn-outline-primary">
+                                <i class="bi bi-download"></i> Download Template
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Results -->
+            <div class="row mt-4" id="uploadResults" style="display: none;">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Resultados do Processamento</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="uploadResultsContent">
+                                <!-- Resultados serão exibidos aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Modal Integrar Orden -->
+    <div class="modal fade" id="integrarOrdenModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Integrar por Número de Ordem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="ordenNumero" class="form-label">Número da Ordem</label>
+                        <input type="number" class="form-control" id="ordenNumero" placeholder="Ex: 41823">
+                        <div class="form-text">Digite o número da ordem e pressione ENTER</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="integrarOrden()">Integrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Nova Ordem -->
+    <div class="modal fade" id="novaOrdemModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nova Ordem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="novaOrdemForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="ordenNumeroOrdem" class="form-label">Número da Ordem *</label>
+                                    <input type="number" class="form-control" id="ordenNumeroOrdem" name="ordenNumero" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="clienteCodigoOrdem" class="form-label">Código do Cliente *</label>
+                                    <input type="number" class="form-control" id="clienteCodigoOrdem" name="clienteCodigo" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="taxa" class="form-label">Taxa (%) *</label>
+                                    <input type="number" class="form-control" id="taxa" name="taxa" step="0.01" min="0" max="100" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="gastos" class="form-label">Gastos Totais *</label>
+                                    <input type="number" class="form-control" id="gastos" name="gastos" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="sector" class="form-label">Setor</label>
+                                    <select class="form-select" id="sector" name="sector">
+                                        <option value="PERSONAL">Personal</option>
+                                        <option value="COMERCIAL">Comercial</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="linhaAfectada" class="form-label">Linha Afetada</label>
+                                    <select class="form-select" id="linhaAfectada" name="linhaAfectada">
+                                        <option value="ENDOSANTE">Endosante</option>
+                                        <option value="LIBRADOR">Librador</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="cobrarSeguro" name="cobrarSeguro">
+                                <label class="form-check-label" for="cobrarSeguro">
+                                    Cobrar Seguro
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="criarNovaOrdem()">Criar Ordem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Novo Cliente -->
+    <div class="modal fade" id="nuevoClienteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="nuevoClienteForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="clienteCodigoCliente" class="form-label">Código *</label>
+                                    <input type="number" class="form-control" id="clienteCodigoCliente" name="clienteCodigo" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="clienteNome" class="form-label">Nome *</label>
+                                    <input type="text" class="form-control" id="clienteNome" name="clienteNome" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="tipoPessoa" class="form-label">Tipo de Pessoa *</label>
+                                    <select class="form-select" id="tipoPessoa" name="tipoPessoa" required>
+                                        <option value="">Selecione...</option>
+                                        <option value="FISICA">Física</option>
+                                        <option value="JURIDICA">Jurídica</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cpfCnpj" class="form-label">CPF/CNPJ *</label>
+                                    <input type="text" class="form-control" id="cpfCnpj" name="cpfCnpj" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="sucursalCodigo" class="form-label">Código da Sucursal *</label>
+                                    <input type="text" class="form-control" id="sucursalCodigo" name="sucursalCodigo" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="sucursalNome" class="form-label">Nome da Sucursal *</label>
+                                    <input type="text" class="form-control" id="sucursalNome" name="sucursalNome" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="criarNuevoCliente()">Criar Cliente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-overlay" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
